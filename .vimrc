@@ -1,37 +1,73 @@
 """""""""""""""""""""""""""""""""""""
-" Written by:
-"	Thomas Skovlund Hansen
+" Author:
+"       Thomas Skovlund Hansen
 "
-" Inspired by:
-"	Amir Salihefendic
-"	http://amix.dk - amix@amix.dk
-"	Syntax highlighted version: http://amix.dk/vim/vimrc.html
-"	Raw version: http://amix.dk/vim/vimrc.txt
+" Inspiration:
+"	    Amir Salihefendic
+"	    http://amix.dk - amix@amix.dk
+"	    Syntax highlighted version: http://amix.dk/vim/vimrc.html
+"	    Raw version: http://amix.dk/vim/vimrc.txt
 "	
 " Version:
-"	0.1 - 25/12/2016
+"	    0.2 - 25/12/2016
 "
 " Sections:
 "    1. General
 "    2. VIM user interface
 "    3. Colors and fonts
-"    4. Text, tab and indent related 
+"    4. Text, tab and indent related
 "    5. Visual mode related
 "    6. Moving around, tabs, windows and buffers 
 "    7. Status line 
-"    8. Helper functions
 "
 """""""""""""""""""""""""""""""""""""
+
 
 """""""""""""""""""""""""""""""""""""
 " 1. General
 """""""""""""""""""""""""""""""""""""
+
+" Use Vundle (from https://github.com/VundleVim/Vundle.vim)
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" Solarized color scheme
+Plugin 'altercation/vim-colors-solarized'
+
+" Auto completion
+Plugin 'Valloric/YouCompleteMe'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+
+" Use pathogen
+execute pathogen#infect()
+
 " Sets how many lines of history VIM has to remember
 set history=700
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -101,21 +137,36 @@ set tm=500
 " Make system clipboard interact with VIM
 set clipboard=unnamedplus
 
+" Use eclim autocompletion
+let g:EclimCompletionMethod = 'omnifunc'
+
+" Autocompletion in python
+let g:ycm_python_binary_path = 'python'
 
 """""""""""""""""""""""""""""""""""""
 " 3. Colors and fonts
 """""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax enable
-
-colorscheme desert
 set background=dark
+" colorscheme elflord
+colorscheme solarized
 
 " Set utf8 as standard encoding
 set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
+
+" Larger GUI font
+set guifont=Bitstream\ Vera\ Sans\ Mono:h14
+
+" Light theme in GUI
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
 
 """""""""""""""""""""""""""""""""""""
 " 4. Text, tab and indent related 
@@ -223,15 +274,13 @@ set viminfo^=%
 set laststatus=2
 
 " Format the statusline
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l 
-
-"""""""""""""""""""""""""""""""""""""
-" 8. Helper functions 
-"""""""""""""""""""""""""""""""""""""
-" Returns true if paste mode is enabled
-function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    en
-    return ''
-endfunction
+set statusline=
+set statusline +=%1*\ %n\ %*            "buffer number
+set statusline +=%5*%{&ff}%*            "file format
+set statusline +=%3*%y%*                "file type
+set statusline +=%4*\ %<%F%*            "full path
+set statusline +=%2*%m%*                "modified flag
+set statusline +=%1*%=%5l%*             "current line
+set statusline +=%2*/%L%*               "total lines
+set statusline +=%1*%4v\ %*             "virtual column number
+set statusline +=%2*0x%04B\ %*          "character under cursor
