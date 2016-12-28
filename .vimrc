@@ -46,6 +46,9 @@ Plugin 'altercation/vim-colors-solarized'
 " Auto completion
 Plugin 'Valloric/YouCompleteMe'
 
+" Vim latex-suite
+Plugin 'vim-latex/vim-latex'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -68,16 +71,39 @@ execute pathogen#infect()
 " Sets how many lines of history VIM has to remember
 set history=700
 
-
 " Set to auto read when a file is changed from the outside
 set autoread
 
 " Ask to save a document instead of saying that it is not saved
 set confirm
 
+""""""
+" VIM LaTeX-suite setup
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+
+"""""
 """""""""""""""""""""""""""""""""""""
 " 2. VIM user interface
 """""""""""""""""""""""""""""""""""""
+" Change mapleader to ,
+let mapleader="\<Space>"
+
+" Show commands
+set showcmd
+set timeoutlen=2000
+
+" Enable mouse
+set mouse=a
+
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
@@ -132,10 +158,9 @@ set mat=2
 set noerrorbells
 set novisualbell
 set t_vb=
-set tm=500
 
 " Make system clipboard interact with VIM
-set clipboard=unnamedplus
+set clipboard=unnamed
 
 " Use eclim autocompletion
 let g:EclimCompletionMethod = 'omnifunc'
@@ -284,3 +309,10 @@ set statusline +=%1*%=%5l%*             "current line
 set statusline +=%2*/%L%*               "total lines
 set statusline +=%1*%4v\ %*             "virtual column number
 set statusline +=%2*0x%04B\ %*          "character under cursor
+
+" Colors
+hi User1 guifg=#eea040 guibg=#222222
+hi User2 guifg=#dd3333 guibg=#222222
+hi User3 guifg=#ff66ff guibg=#222222
+hi User4 guifg=#a0ee40 guibg=#222222
+hi User5 guifg=#eeee40 guibg=#222222
