@@ -94,7 +94,7 @@ let g:tex_flavor='latex'
 """""""""""""""""""""""""""""""""""""
 " 2. VIM user interface
 """""""""""""""""""""""""""""""""""""
-" Change mapleader to ,
+" Change mapleader to space
 let mapleader="\<Space>"
 
 " Show commands
@@ -143,6 +143,9 @@ set hlsearch
 " Makes search act like search in modern browsers
 set incsearch
 
+" Map , to remove highlight from last search
+nnoremap , :noh<CR>
+
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
 
@@ -167,6 +170,10 @@ let g:EclimCompletionMethod = 'omnifunc'
 
 " Autocompletion in python
 let g:ycm_python_binary_path = 'python'
+
+" Python config
+autocmd FileType python set shiftwidth=4 softtabstop=4 expandtab
+filetype indent plugin on
 
 """""""""""""""""""""""""""""""""""""
 " 3. Colors and fonts
